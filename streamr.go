@@ -45,7 +45,13 @@ func newResponse(r *http.Response) *Response {
 
 // NewClient creates a new Streamr client.
 func NewClient(apiKey string) (*Client, error) {
-	baseURL, err := url.Parse("https://www.streamr.com/api/v1/")
+	var url = "https://www.streamr.com/api/v1/"
+	return NewClientWithBaseURL(apiKey, url)
+}
+
+// NewClientWithBaseURL creates a new Streamr client with given baseURL for mostly testing purposes.
+func NewClientWithBaseURL(apiKey, baseURL string) (*Client, error) {
+	url, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +59,7 @@ func NewClient(apiKey string) (*Client, error) {
 	c := &Client{
 		client:  http.DefaultClient,
 		APIKey:  apiKey,
-		BaseURL: baseURL,
+		BaseURL: url,
 	}
 	c.common.client = c
 	c.Data = (*DataService)(&c.common)
