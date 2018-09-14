@@ -82,7 +82,7 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 		buf = new(bytes.Buffer)
 		enc := json.NewEncoder(buf)
 		enc.SetEscapeHTML(false)
-		err := enc.Encode(body)
+		err = enc.Encode(body)
 		if err != nil {
 			return nil, err
 		}
@@ -106,7 +106,11 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer func() {
+		if e := res.Body.Close(); e != nil {
+			err = e
+		}
+	}()
 	response := newResponse(res)
 
 	err = CheckResponse(res)
