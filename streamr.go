@@ -24,7 +24,8 @@ type Client struct {
 	common service // Reuse a single struct instead of allocating one for each service on the heap.
 
 	// Services used for talking to different parts of the Streamr API.
-	Data *DataService
+	Data   *DataService
+	Stream *StreamService
 }
 
 type service struct {
@@ -68,6 +69,10 @@ func NewClientWithBaseURL(apiKey, baseURL string) (*Client, error) {
 	}
 	c.common.client = c
 	c.Data = (*DataService)(&c.common)
+	c.Stream = &StreamService{
+		subByID:     make(map[string]*Subscription),
+		subByStream: make(map[string][]*Subscription),
+	}
 	return c, nil
 }
 
