@@ -10,6 +10,7 @@ env:
 # Skip the install step. Don't `go get` dependencies. Only build with the code
 # in vendor/
 install: true
+sudo: false
 matrix:
   allow_failures:
     - go: "tip"
