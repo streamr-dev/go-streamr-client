@@ -1,0 +1,18 @@
+language: go
+go:
+  - "1.11.x"
+  - "tip"
+env:
+  - GO111MODULE=on
+# Skip the install step. Don't `go get` dependencies. Only build with the code
+# in vendor/
+install: true
+matrix:
+  allow_failures:
+    - go: "tip"
+script:
+  - ./ci/validate-gofmt.sh
+  - go get -u github.com/golang/lint/golint
+  - ./ci/validate-lint.sh
+  - go test -race -v ./...
+
