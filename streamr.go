@@ -61,6 +61,7 @@ func NewClientWithBaseURL(apiKey, baseURL string) (*Client, error) {
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
 				return http.ErrUseLastResponse
 			},
+			Timeout: 0,
 		},
 		APIKey:  apiKey,
 		BaseURL: url,
