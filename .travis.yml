@@ -5,6 +5,7 @@ go:
 os:
   - linux
   - osx
+  - windows
 env:
   - GO111MODULE=on
 # Skip the install step. Don't `go get` dependencies. Only build with the code
