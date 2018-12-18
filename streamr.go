@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // Client is the Streamr API client.
@@ -61,7 +62,7 @@ func NewClientWithBaseURL(apiKey, baseURL string) (*Client, error) {
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
 				return http.ErrUseLastResponse
 			},
-			Timeout: 0,
+			Timeout: 10 * time.Second,
 		},
 		APIKey:  apiKey,
 		BaseURL: url,
