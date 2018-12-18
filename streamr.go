@@ -93,6 +93,7 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 	if err != nil {
 		return nil, err
 	}
+	req.Close = true
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
