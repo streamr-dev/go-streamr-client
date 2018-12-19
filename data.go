@@ -15,6 +15,7 @@ type Data interface{}
 func (d DataService) ProduceToStream(streamID string, data Data) (*Response, error) {
 	url := fmt.Sprintf("streams/%v/data", streamID)
 	req, err := d.client.NewRequest(http.MethodPost, url, data)
+	req.Close = true
 	if err != nil {
 		return nil, fmt.Errorf("http request to streamr.com failed: %v", err)
 	}
