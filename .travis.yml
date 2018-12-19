@@ -5,7 +5,7 @@ go:
 os:
   - linux
   - osx
-  - windows
+#  - windows
 env:
   - GO111MODULE=on
 # Skip the install step. Don't `go get` dependencies. Only build with the code
@@ -17,7 +17,7 @@ matrix:
     - go: "tip"
 script:
   - ./ci/validate-gofmt.sh
-  - go get -u golang.org/x/lint/golint
+  - GO111MODULE=off go get -u golang.org/x/lint/golint
   - ./ci/validate-lint.sh
-  - go test -race -v ./...
+  - go test -v ./...
 
